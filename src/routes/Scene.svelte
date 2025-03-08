@@ -14,13 +14,7 @@
 	});
 </script>
 
-<T.PerspectiveCamera
-	makeDefault
-	position={[0, 10, 40]}
-	oncreate={(ref) => {
-		ref.lookAt(0, 0, 0);
-	}}
->
+<T.PerspectiveCamera makeDefault position={[0, 10, 40]} fov={40}>
 	<OrbitControls autoRotate autoRotateSpeed={0.3} maxPolarAngle={(Math.PI / 2) * 0.9} />
 </T.PerspectiveCamera>
 
@@ -37,10 +31,10 @@
 />
 
 <!-- Ambient light for overall scene brightness -->
-<T.AmbientLight intensity={0.4} color="#ffffff" />
+<T.AmbientLight intensity={0.1} color="#ffffff" castShadow />
 
 <!-- Hemisphere light for sky/ground interaction -->
-<T.HemisphereLight skyColor="#87ceeb" groundColor="#8b4513" intensity={0.5} />
+<T.HemisphereLight skyColor="#87ceeb" groundColor="#8b4513" intensity={0.2} />
 
 <!-- Ground plane to receive shadows -->
 <T.Mesh position={[0, -0.1, 0]} rotation.x={-Math.PI / 2} receiveShadow>

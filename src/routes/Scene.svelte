@@ -16,14 +16,36 @@
 
 <T.PerspectiveCamera
 	makeDefault
-	position={[20, 10, 10]}
+	position={[0, 10, 40]}
 	oncreate={(ref) => {
-		ref.lookAt(-10, 0, -30);
+		ref.lookAt(0, 0, 0);
 	}}
 >
-	<OrbitControls autoRotate maxPolarAngle={(Math.PI / 2) * 0.9} />
+	<OrbitControls autoRotate autoRotateSpeed={0.3} maxPolarAngle={(Math.PI / 2) * 0.9} />
 </T.PerspectiveCamera>
 
-<T.DirectionalLight position={[0, 10, 10]} castShadow />
+<!-- Main sunlight - warm directional light -->
+<T.DirectionalLight
+	position={[5, 15, 10]}
+	intensity={1.2}
+	color="#ffd700"
+	castShadow
+	shadow.mapSize.width={2048}
+	shadow.mapSize.height={2048}
+	shadow.camera.far={50}
+	shadow.camera.near={0.1}
+/>
+
+<!-- Ambient light for overall scene brightness -->
+<T.AmbientLight intensity={0.4} color="#ffffff" />
+
+<!-- Hemisphere light for sky/ground interaction -->
+<T.HemisphereLight skyColor="#87ceeb" groundColor="#8b4513" intensity={0.5} />
+
+<!-- Ground plane to receive shadows -->
+<T.Mesh position={[0, -0.1, 0]} rotation.x={-Math.PI / 2} receiveShadow>
+	<T.PlaneGeometry args={[200, 200]} />
+	<T.MeshStandardMaterial color="#e6e6e6" roughness={1} metalness={0} />
+</T.Mesh>
 
 <Munich />

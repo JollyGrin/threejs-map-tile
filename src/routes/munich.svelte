@@ -4,6 +4,7 @@ Command: npx @threlte/gltf@3.0.0 static/munich.glb --transform
 -->
 
 <script lang="ts">
+	import { base } from '$app/paths';
 	import { T } from '@threlte/core';
 	import { useGltf } from '@threlte/extras';
 	import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
@@ -24,7 +25,7 @@ Command: npx @threlte/gltf@3.0.0 static/munich.glb --transform
 	const dracoLoader = new DRACOLoader();
 	dracoLoader.setDecoderPath('/draco/');
 
-	const gltf = useGltf('/munich-transformed.glb', {
+	const gltf = useGltf(base + '/munich-transformed.glb', {
 		dracoLoader: dracoLoader
 	});
 </script>
@@ -33,14 +34,15 @@ Command: npx @threlte/gltf@3.0.0 static/munich.glb --transform
 	{#await gltf}
 		{@render fallback?.()}
 	{:then gltf}
-		<T.Mesh geometry={gltf.nodes.map_2osm_buildings_1.geometry} material={gltf.materials.beige} />
+		<T.Mesh geometry={gltf.nodes.map_2osm_buildings_1.geometry} material={gltf.materials.beige} castShadow />
 		<T.Mesh
 			geometry={gltf.nodes.map_2osm_buildings_2.geometry}
 			material={gltf.materials['43b3ae']}
+			castShadow
 		/>
-		<T.Mesh geometry={gltf.nodes.map_2osm_buildings_3.geometry} material={gltf.materials.white} />
-		<T.Mesh geometry={gltf.nodes.map_2osm_buildings_4.geometry} material={gltf.materials.red} />
-		<T.Mesh geometry={gltf.nodes.map_2osm_buildings_5.geometry} material={gltf.materials.green} />
+		<T.Mesh geometry={gltf.nodes.map_2osm_buildings_3.geometry} material={gltf.materials.white} castShadow />
+		<T.Mesh geometry={gltf.nodes.map_2osm_buildings_4.geometry} material={gltf.materials.red} castShadow />
+		<T.Mesh geometry={gltf.nodes.map_2osm_buildings_5.geometry} material={gltf.materials.green} castShadow />
 		<T.Mesh geometry={gltf.nodes.map_2osm_buildings_6.geometry} material={gltf.materials.da7752} />
 		<T.Mesh geometry={gltf.nodes.map_2osm_buildings_7.geometry} material={gltf.materials.wall} />
 		<T.Mesh geometry={gltf.nodes.map_2osm_buildings_8.geometry} material={gltf.materials.roof} />

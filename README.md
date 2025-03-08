@@ -1,3 +1,41 @@
+
+# 3d-map-tile
+
+## Pre-Reqs
+- [blosm for blender](https://prochitecture.gumroad.com/l/blender-osm)
+- blender
+
+## load map
+Install the plugin
+`Edit > Settings > Addons > install from disk > select zip`
+
+open the sidepane with `n`
+
+select blosm, use openstreetmaps, select area, paste, and then import (screenshot in static/blosm-screen.png)
+
+## export as glb
+
+from blender export as glb
+
+## import to gltf
+
+Compress the gltf with threlte cli tools  https://threlte.xyz/docs/reference/gltf/getting-started#example
+`npx @threlte/gltf@latest model.gltf --transform`
+
+## copy the draco loader
+ensure that the folder `static/draco/` has the appropriate files. Then use it in the gltf component
+
+```ts
+	const dracoLoader = new DRACOLoader();
+	dracoLoader.setDecoderPath('/draco/');
+
+	const gltf = useGltf('/munich-transformed.glb', {
+		dracoLoader: dracoLoader
+	});
+```
+
+---
+
 # sv
 
 Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).

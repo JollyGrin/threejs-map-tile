@@ -1,13 +1,19 @@
 <script lang="ts">
-	import { T, useTask } from '@threlte/core';
+	import { T, useTask, useThrelte } from '@threlte/core';
 	import { interactivity, OrbitControls } from '@threlte/extras';
 	import { Spring } from 'svelte/motion';
 	import Munich from './munich.svelte';
+	import { Color, FogExp2 } from 'three';
 
 	interactivity();
 
-	const scale = new Spring(1);
-
+	const { scene } = useThrelte();
+	
+	// Set up scene background and fog for spring atmosphere
+	const skyColor = new Color('#B0E2FF'); // Lighter, more spring-like blue
+	scene.background = skyColor;
+	scene.fog = new FogExp2('#B0E2FF', 0.004); // More subtle fog effect
+	
 	let rotation = 0;
 	useTask((delta) => {
 		rotation += delta;
@@ -15,7 +21,14 @@
 </script>
 
 <T.PerspectiveCamera makeDefault position={[0, 10, 40]} fov={40}>
-	<OrbitControls autoRotate autoRotateSpeed={0.3} maxPolarAngle={(Math.PI / 2) * 0.9} />
+	<OrbitControls
+		autoRotate
+		autoRotateSpeed={0.3}
+		maxPolarAngle={(Math.PI / 2) * 0.9}
+		enableDamping
+		enableZoom
+		maxDistance={70}
+	/>
 </T.PerspectiveCamera>
 
 <!-- Main sunlight - warm directional light -->
@@ -38,8 +51,14 @@
 
 <!-- Ground plane to receive shadows -->
 <T.Mesh position={[0, -0.1, 0]} rotation.x={-Math.PI / 2} receiveShadow>
-	<T.PlaneGeometry args={[200, 200]} />
-	<T.MeshStandardMaterial color="#e6e6e6" roughness={1} metalness={0} />
+	<T.PlaneGeometry args={[500, 500]} />
+	<T.MeshStandardMaterial 
+		color="#98FB98" 
+		roughness={0.9} 
+		metalness={0.05}
+		transparent={true}
+		opacity={0.95}
+	/>
 </T.Mesh>
 
 <Munich />

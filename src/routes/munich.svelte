@@ -19,7 +19,7 @@
 	} = $props();
 
 	const dracoLoader = new DRACOLoader();
-	dracoLoader.setDecoderPath('/draco/');
+	dracoLoader.setDecoderPath(base + '/draco/');
 
 	const gltf = useGltf(base + '/munich-transformed.glb', {
 		dracoLoader: dracoLoader
